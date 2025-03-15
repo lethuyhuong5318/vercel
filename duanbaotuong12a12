@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Báo Tường 12A12 - THPT Trấn Biên</title>
+    
+    <!-- Thư viện -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@700&family=Poppins&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --school-color: #C8102E; /* Màu đỏ đặc trưng Trấn Biên */
+            --gold: #FFD700;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(45deg, #fff5f5, #f0f8ff);
+        }
+
+        /* Header */
+        .hero-section {
+            background: linear-gradient(rgba(200, 16, 46, 0.8), rgba(200, 16, 46, 0.9)), 
+                        url('https://source.unsplash.com/random/1920x1080/?school,class') center/cover;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+        }
+
+        .school-logo {
+            width: 120px;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.5));
+        }
+
+        /* Hiệu ứng trái tim */
+        .heart-float {
+            animation: floatHeart 5s ease-in-out infinite;
+            position: absolute;
+            opacity: 0.7;
+        }
+
+        @keyframes floatHeart {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-100px) rotate(360deg); }
+        }
+
+        /* Bài thơ */
+        .poem-section {
+            background: url('https://www.transparenttextures.com/patterns/old-mathematics.png'), 
+                       linear-gradient(to right, #ffecd2 0%, #fcb69f 100%);
+            border-left: 10px solid var(--school-color);
+            font-family: 'Great Vibes', cursive;
+        }
+
+        /* Quote */
+        .quote-card {
+            background: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quote-card::before {
+            content: open-quote;
+            font-family: 'Playfair Display', serif;
+            font-size: 8rem;
+            position: absolute;
+            color: var(--school-color);
+            opacity: 0.1;
+            top: -30px;
+            left: 10px;
+        }
+
+        /* Timeline */
+        .timeline-item-tb::after {
+            content: '';
+            width: 20px;
+            height: 20px;
+            background: var(--school-color);
+            position: absolute;
+            left: -10px;
+            top: 0;
+            border-radius: 50%;
+            border: 3px solid white;
+        }
+
+        /* Nút trái tim */
+        .heart-btn {
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .heart-btn:hover {
+            transform: scale(1.2);
+            color: var(--school-color);
+        }
+
+        /* Con thuyền và dòng sông */
+        .river-section {
+            position: relative;
+            height: 200px;
+            background: linear-gradient(to right, #87CEEB, #00BFFF);
+            overflow: hidden;
+            margin: 50px 0;
+        }
+
+        .boat {
+            position: absolute;
+            bottom: 20px;
+            left: -100px;
+            width: 100px;
+            animation: floatBoat 10s linear infinite;
+        }
+
+        @keyframes floatBoat {
+            0% { transform: translateX(-100px); }
+            100% { transform: translateX(100vw); }
+        }
+
+        /* Nút xem tên thành viên */
+        .member-section {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .member-list {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .member-list.show {
+            display: block;
+        }
+
+        .member-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .member-list li {
+            font-size: 1.2em;
+            margin: 5px 0;
+        }
+
+        /* Popup container */
+        .popup-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup-content {
+            background: white;
+            width: 90%;
+            max-width: 800px;
+            padding: 2rem;
+            border-radius: 15px;
+            position: relative;
+            animation: popupFadeIn 0.5s ease;
+        }
+
+        @keyframes popupFadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: var(--school-color);
+        }
+
+        .teacher-avatar {
+            width: 150px;
+            height: 150px;
+            border: 3px solid var(--school-color);
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .tech-card {
+            background: rgba(255, 255, 255, 0.95);
+            border: 2px solid var(--school-color);
+            transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .tech-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(41, 98, 255, 0.2);
+        }
+
+        .code-rain {
+            border: 1px solid var(--school-color);
+            overflow: hidden;
+            font-family: 'Source Code Pro', monospace;
+            font-size: 1.2em;
+            background: #1A1A1A;
+            color: #00FF00;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="hero-section text-white text-center py-5 position-relative">
+        <!-- Thêm logo Trấn Biên -->
+        <img src="https://scontent.fsgn2-9.fna.fbcdn.net/v/t39.30808-6/306964377_557475962843852_5518141950734444633_n.png?_nc_cat=103&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeEgWjcuYN2q0ZS0MXysmbTUjLmR2LzEWy6MuZHYvMRbLvxeAEDxbBBZeQD-5l4pWMR8ircr4AbGq_AK30MbyVGB&_nc_ohc=aptZjFJlE3UQ7kNvgHWjbl4&_nc_oc=AdgNnsERRTk5nWj8ASqhIuoT1fQM0eGeJFtr6cdf1WlgvgrV00BjgOaXCDlGPvFjNoI&_nc_zt=23&_nc_ht=scontent.fsgn2-9.fna&_nc_gid=mL2dW87amWPFybjggg6Wdw&oh=00_AYEkeOa3tT3owvGGC5zlFzUqDPhXnzznsQe1q_DnmOUSOA&oe=67DB3834" alt="Logo THPT Trấn Biên" class="school-logo">
+        
+        <div class="container py-5" data-aos="zoom-in">
+            <h1 class="display-3 fw-bold">
+                <span class="text-warning">12A12</span> Trấn Biên
+                <br>
+                <small class="fs-4">2022 - 2025</small>
+            </h1>
+            <div class="mt-4">
+                <span class="heart-btn">❤️</span>
+                <span class="heart-btn">💖</span>
+                <span class="heart-btn">💝</span>
+            </div>
+            <div class="text-center mt-4">
+                <button class="btn btn-lg btn-light" onclick="openPopup()">
+                    <i class="fas fa-code me-2"></i>Tri Ân Thầy Bảy
+                </button>
+            </div>
+        </div>
+
+        <!-- Trái tim bay -->
+        <div class="heart-float" style="left: 10%; top: 20%">❤️</div>
+        <div class="heart-float" style="left: 30%; top: 50%">💖</div>
+        <div class="heart-float" style="right: 20%; top: 40%">💝</div>
+    </header>
+
+    <!-- Bài thơ -->
+    <section class="container my-5 poem-section p-5 rounded-4 shadow" data-aos="fade-up">
+        <h2 class="text-center mb-4 fs-1 text-danger">Tri Ân Thầy Cô</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center fs-4">
+                <p>Thầy ơi con nhớ những ngày xưa<br>
+                Bảng đen phấn trắng vẫn đong đưa<br>
+                Những lời giảng ấm như hơi thở<br>
+                Cho con bay tới những ước mơ</p>
+
+                <p>Dẫu mai đi khắp phương trời<br>
+                Lời thầy dạy dỗ đời đời khắc ghi<br>
+                Dù cho vật đổi sao dời<br>
+                Ơn thầy một thuở trọn đời không quên</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quotes -->
+    <section class="container my-5">
+        <div class="row g-4">
+            <div class="col-md-6" data-aos="flip-left">
+                <div class="quote-card p-4 rounded-3">
+                    <blockquote class="fst-italic fs-5">
+                        "Cảm ơn thầy cô đã là ngọn hải đăng 
+                        dẫn lối chúng em giữa biển khơi tri thức. 
+                        Những bài học của thầy cô là hành trang 
+                        theo chúng em suốt cuộc đời."
+                    </blockquote>
+                    <p class="text-end mt-3 fw-bold">- Tập thể 12A12 -</p>
+                </div>
+            </div>
+
+            <div class="col-md-6" data-aos="flip-right">
+                <div class="quote-card p-4 rounded-3 bg-warning text-dark">
+                    <blockquote class="fst-italic fs-5">
+                        "Thầy cô ơi! Chúng em biết 
+                        những đêm trắng cùng trang giáo án, 
+                        những giọt mồ hôi lặng thầm trên bục giảng... 
+                        Tất cả là tình yêu thương vô bờ dành cho chúng em."
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline kỷ niệm -->
+    <section class="container my-5 py-5">
+        <h2 class="text-center mb-5 display-5 fw-bold text-danger">Chặng Đường 12A12</h2>
+        
+        <div class="timeline">
+            <div class="timeline-item-tb position-relative ps-4 ms-3" data-aos="fade-right">
+                <h3>Tháng 8/2022 - Khởi Đầu</h3>
+                <p>
+                    Ngày đầu tiên gặp gỡ, chúng tôi - những cô cậu học trò lớp 10 còn bỡ ngỡ, 
+                    rụt rè bước vào ngôi trường THPT Trấn Biên. Nhóm 2 chúng tôi gồm 10 thành viên 
+                    đã gặp nhau trong buổi sinh hoạt đầu năm, bắt đầu những tình bạn đẹp.
+                </p>
+            </div>
+
+            <div class="timeline-item-tb position-relative ps-4 ms-3" data-aos="fade-left">
+                <h3>Năm 2023 - Gắn Kết</h3>
+                <p>
+                    Cùng nhau trải qua những buổi học đầy ắp tiếng cười, những lần thi đua học tập, 
+                    và cả những giờ ra chơi vội vã ăn vặt. Nhóm 2 đã trở thành một gia đình nhỏ 
+                    trong tập thể 12A12, cùng nhau vượt qua những bài kiểm tra khó nhằn.
+                </p>
+            </div>
+
+            <div class="timeline-item-tb position-relative ps-4 ms-3" data-aos="fade-right">
+                <h3>Năm 2024 - Trưởng Thành</h3>
+                <p>
+                    Những dự án tập thể, những buổi thảo luận sôi nổi, và cả những lần thức khuya 
+                    ôn bài cùng nhau. Nhóm 2 đã cùng cả lớp tạo nên những kỷ niệm khó quên, 
+                    từ những chuyến đi dã ngoại đến những đêm văn nghệ đầy cảm xúc.
+                </p>
+            </div>
+
+            <div class="timeline-item-tb position-relative ps-4 ms-3" data-aos="fade-left">
+                <h3>Tháng 5/2025 - Tạm Biệt</h3>
+                <p>
+                    Mùa chia tay đến, những trang lưu bút được viết vội, những cái ôm thật chặt, 
+                    và cả những giọt nước mắt lăn dài. Nhóm 2 cùng cả lớp 12A12 hứa sẽ mãi giữ 
+                    những kỷ niệm này trong tim, dù mai này mỗi người một phương trời.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Con thuyền và dòng sông -->
+    <section class="river-section">
+        <img src="https://png.pngtree.com/png-vector/20230728/ourmid/pngtree-boat-clipart-vector-png-image_6804350.png" alt="Con thuyền" class="boat">
+    </section>
+
+    <!-- Nút xem tên thành viên -->
+    <section class="member-section">
+        <button class="btn btn-primary" onclick="showMembers()">Xem Tên Thành Viên</button>
+        <div class="member-list" id="memberList">
+            <ul>
+                <li>Quỳnh Hoa</li>
+                <li>Xuân Phú</li>
+                <li>Tấn Dũng</li>
+                <li>Bá Khôi</li>
+                <li>Thùy Hương</li>
+                <li>Chí Trung</li>
+                <li>Phương Giang</li>
+                <li>Gia Bảo</li>
+                <li>Yến Nhi</li>
+                <li>Ánh Thy</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-5">
+        <div class="container text-center">
+            <div class="d-flex justify-content-center gap-3 mb-4">
+                <button class="btn btn-outline-light btn-heart">
+                    <i class="fas fa-heart"></i> Nhóm 2 - 12A12
+                </button>
+                <button class="btn btn-outline-warning btn-heart">
+                    <i class="fas fa-school"></i> THPT Trấn Biên
+                </button>
+            </div>
+            
+            <p class="mb-1">Lớp 12A12 niên khóa 2022 - 2025</p>
+            <p>Trường THPT Trấn Biên - Biên Hòa, Đồng Nai</p>
+            
+            <!-- Hiệu ứng tim đập -->
+            <div class="heart-pulse mt-3" style="font-size: 2rem">
+                <i class="fas fa-heartbeat text-danger"></i>
+            </div>
+        </div>
+    </footer>
+    <!-- Section Video YouTube -->
+    <section class="container my-5">
+        <h2 class="text-center mb-4 display-5 fw-bold text-danger">Video Kỷ Niệm</h2>
+        <div class="ratio ratio-16x9">
+            <iframe
+                src="https://www.youtube.com/embed/sj_UDyfoo-A"
+                title="Video Kỷ Niệm 12A12"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+            ></iframe>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Popup tri ân thầy Bảy -->
+    <div id="thayBayPopup" class="popup-container">
+        <div class="popup-content">
+            <button class="close-btn" onclick="closePopup()">&times;</button>
+            
+            <div class="text-center mb-4">
+                <img src="https://thaygiaotin.io.vn/uploads/banners/logo_500_488.png" alt="Thầy Bảy" class="teacher-avatar">
+                <h2 class="tribute-font mt-3">Thầy Bảy</h2>
+                <p class="text-muted">Giáo viên Tin học - THPT Trấn Biên</p>
+            </div>
+
+            <!-- Card tri ân -->
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="tech-card p-4 rounded-3">
+                        <h3 class="tribute-font">Lời Tri Ân</h3>
+                        <p class="mt-3">
+                            "Cảm ơn thầy đã dạy chúng em từ những dòng code đầu tiên đến những dự án phức tạp. 
+                            Những bài học của thầy không chỉ là kiến thức mà còn là tình yêu công nghệ."
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="tech-card p-4 rounded-3">
+                        <h3 class="tribute-font">Thành Tích</h3>
+                        <ul class="list-unstyled mt-3">
+                            <li>🏆 Nhiều giải thưởng học sinh giỏi các cấp</li>
+                            <li>💻 Tham gia tích cực các cuộc thi sáng tạo</li>
+                            <li>🤖 Đạt thành tích cao trong các kỳ thi Tin học</li>
+                            <li>🎨 Nhiều hoạt động văn nghệ, thể thao nổi bật</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dòng code đặc biệt -->
+            <div class="code-rain mt-4 p-3 rounded-3">
+                <marquee behavior="scroll" direction="left">
+                    System.out.println("Cảm ơn thầy đã dạy chúng em cách thay đổi thế giới bằng code!");
+                </marquee>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: false
+        });
+
+
+        // Hiệu ứng click tim
+        document.querySelectorAll('.btn-heart').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.innerHTML = `❤️ ${this.innerText}`;
+                setTimeout(() => {
+                    this.innerHTML = this.innerHTML.replace('❤️ ', '');
+                }, 500);
+            });
+        });
+
+        // Tạo trái tim bay
+        function createFlyingHeart() {
+            const heart = document.createElement('div');
+            heart.innerHTML = '❤️';
+            heart.style.position = 'fixed';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.top = '105vh';
+            heart.style.animation = `flyHeart ${Math.random() * 3 + 2}s linear`;
+            document.body.appendChild(heart);
+
+            setTimeout(() => heart.remove(), 5000);
+        }
+
+        // Thêm CSS animation bay
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes flyHeart {
+                0% { transform: translateY(0) scale(1); opacity: 1; }
+                100% { transform: translateY(-100vh) scale(0.3); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Tạo trái tim mỗi 3s
+        setInterval(createFlyingHeart, 3000);
+
+        // Mở popup
+        function openPopup() {
+            document.getElementById('thayBayPopup').style.display = 'flex';
+        }
+
+        // Đóng popup
+        function closePopup() {
+            document.getElementById('thayBayPopup').style.display = 'none';
+        }
+
+        // Đóng khi click bên ngoài
+        window.onclick = function(event) {
+            const popup = document.getElementById('thayBayPopup');
+            if (event.target === popup) {
+                popup.style.display = 'none';
+            }
+        };
+
+        // Hiển thị tên thành viên
+        function showMembers() {
+            const memberList = document.getElementById('memberList');
+            memberList.classList.toggle('show');
+        }
+
+    </script>
+</body>
+</html>
